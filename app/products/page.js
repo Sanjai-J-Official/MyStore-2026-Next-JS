@@ -35,10 +35,10 @@ function ProductsContent() {
         if (search) {
           url.searchParams.set('search', search);
         }
-        
+
         const res = await fetch(url);
         const data = await res.json();
-        
+
         if (data.success) {
           setProducts(data.data);
         } else {
@@ -70,19 +70,19 @@ function ProductsContent() {
         return 0;
     }
   });
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>All Products</h1>
         <SearchBar />
-        
+
         {search && (
           <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>
             Showing results for <strong>&quot;{search}&quot;</strong> ({sortedProducts.length})
           </p>
         )}
-        
+
         <div className={styles.controls}>
           <div className={styles.filters}>
             {CATEGORIES.map(cat => (
@@ -91,15 +91,15 @@ function ProductsContent() {
                 className={`${styles.filterBtn} ${activeCategory === cat ? styles.active : ''}`}
                 onClick={() => setActiveCategory(cat)}
               >
-                {cat} 
+                {cat}
                 {activeCategory === cat && activeCategory !== 'All' && <span>{sortedProducts.length}</span>}
               </button>
             ))}
           </div>
-          
-          <select 
-            className={styles.sortSelect} 
-            value={sortBy} 
+
+          <select
+            className={styles.sortSelect}
+            value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
           >
             <option value="featured">Sort by: Featured</option>
@@ -131,7 +131,7 @@ function ProductsContent() {
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
           <h2 className={styles.emptyTitle}>No products found</h2>
-          <p className={styles.emptyDesc}>We couldn't find anything matching your current filters.</p>
+          <p className={styles.emptyDesc}>We couldn&apos;t find any products</p>
           <button className={styles.clearBtn} onClick={handleClearFilters}>
             Clear all filters
           </button>
