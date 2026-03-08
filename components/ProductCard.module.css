@@ -1,0 +1,169 @@
+.card {
+  background: var(--bg-primary);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  cursor: pointer;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* 1:1 Aspect Ratio */
+  overflow: hidden;
+  background-color: var(--bg-secondary);
+}
+
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card:hover .image {
+  transform: scale(1.05);
+}
+
+.badges {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.discountBadge {
+  background: var(--error);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.newBadge {
+  background: var(--success);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.category {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 48px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 12px;
+}
+
+.star {
+  color: var(--warning);
+  width: 14px;
+  height: 14px;
+}
+
+/* Hardcode a lighter star for the 5th star occasionally */
+.starEmpty {
+  color: var(--border);
+  width: 14px;
+  height: 14px;
+}
+
+.priceContainer {
+  margin-bottom: 16px;
+  margin-top: auto;
+}
+
+.currentPrice {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-right: 8px;
+}
+
+.originalPrice {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-decoration: line-through;
+  margin-right: 8px;
+}
+
+.savings {
+  font-size: 0.75rem;
+  color: var(--success);
+  font-weight: 600;
+  display: block;
+  margin-top: 4px;
+}
+
+.quickAdd {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 70%, rgba(255,255,255,0) 100%);
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: 3;
+}
+
+.card:hover .quickAdd {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .quickAdd {
+    transform: translateY(0);
+    position: relative;
+    background: none;
+    padding: 0;
+    margin-top: 16px;
+  }
+}

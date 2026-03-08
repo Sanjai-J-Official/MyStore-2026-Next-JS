@@ -1,0 +1,39 @@
+.button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 12px 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.button:hover:not(:disabled) {
+  background-color: var(--primary-dark);
+}
+
+.button:disabled {
+  background-color: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.button.success {
+  background-color: var(--success);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.small {
+  padding: 8px 16px;
+  font-size: 0.875rem;
+}
