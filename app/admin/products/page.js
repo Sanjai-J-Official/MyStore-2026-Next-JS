@@ -140,18 +140,21 @@ export default function ManageProducts() {
                     </td>
                     <td>
                       <div style={{ display: 'flex', gap: '8px' }}>
-                        <button 
+                        <Link 
+                          href={`/admin/products/${product._id}/edit?key=${key}`}
                           style={{ 
                             padding: '6px 12px', 
                             background: 'var(--bg-secondary)', 
-                            border: 'none', 
+                            color: 'var(--text-primary)',
+                            textDecoration: 'none',
+                            border: '1px solid var(--border)', 
                             borderRadius: '6px',
-                            cursor: 'pointer'
+                            cursor: 'pointer',
+                            fontSize: '0.85rem'
                           }}
-                          onClick={() => showToast('Edit feature coming soon', 'info')}
                         >
                           Edit
-                        </button>
+                        </Link>
                         <button 
                           style={{ 
                             padding: '6px 12px', 
