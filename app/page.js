@@ -4,6 +4,7 @@ import Product from '@/models/Product';
 import ProductCard from '@/components/ProductCard';
 import styles from './page.module.css';
 
+
 async function getFeaturedProducts() {
   try {
     await dbConnect();
