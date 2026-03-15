@@ -127,14 +127,34 @@
 .brand {
   text-decoration: none;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;        /* icon LEFT of text */
   align-items: center;
+  gap: 14px;
   cursor: pointer;
   transition: transform 0.3s ease;
 }
 
 .navbarScrolled .brand {
   transform: scale(0.96);
+}
+
+/* Desktop: leaf icon */
+.brandLogoIcon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  transition: transform 0.35s ease;
+}
+
+.brand:hover .brandLogoIcon {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+/* Desktop: text + decorative lines stacked — lines centered under text */
+.brandTextColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .brandCrystalMask {
@@ -480,9 +500,28 @@
   transform: scale(1.04);
 }
 
-/* center brand only on mobile */
+/* Mobile: logo-only link — perfectly centered with absolute positioning */
 .brandMobile {
   text-decoration: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+/* Mobile leaf icon */
+.brandLogoIconMobile {
+  width: 38px;
+  height: 38px;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.brandMobile:hover .brandLogoIconMobile {
+  transform: rotate(-8deg) scale(1.1);
 }
 
 /* Mobile drawer ----------------------------------------------- */

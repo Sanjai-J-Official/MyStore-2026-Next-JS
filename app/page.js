@@ -2,6 +2,7 @@ import Link from 'next/link';
 import dbConnect from '@/lib/mongodb';
 import Product from '@/models/Product';
 import ProductCard from '@/components/ProductCard';
+import HeroSlider from '@/components/HeroSlider';
 import styles from './page.module.css';
 
 
@@ -28,30 +29,8 @@ export default async function Home() {
 
   return (
     <>
-      {/* 1. HERO SECTION */}
-      <section className={styles.hero}>
-        <div className={styles.floatingShapes}>
-          <div className={`${styles.shape} ${styles.shape1}`}></div>
-          <div className={`${styles.shape} ${styles.shape2}`}></div>
-          <div className={`${styles.shape} ${styles.shape3}`}></div>
-        </div>
-        
-        <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>Fresh Styles, Real Prices</h1>
-          <p className={styles.heroSubtitle}>
-            Discover the latest trends across fashion, electronics, and accessories. 
-            Premium quality items delivered right to your doorstep.
-          </p>
-          <div className={styles.heroButtons}>
-            <Link href="/products" className={styles.btnPrimary}>
-              Shop Now
-            </Link>
-            <Link href="/#categories" className={styles.btnSecondary}>
-              View Collections
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* 1. HERO SLIDER */}
+      <HeroSlider />
 
       {/* 2. MARQUEE BANNER */}
       <div className={styles.marqueeContainer}>

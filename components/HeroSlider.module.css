@@ -1,0 +1,247 @@
+/* ============================================================
+   HeroSlider.module.css
+   Premium full-bleed banner slider for Hidden Leaf
+   — Slide animation: right-to-left (translateX)
+   — No gap from navbar (negative margin-top)
+   ============================================================ */
+
+/* ── Keyframe animations ─────────────────────────────────── */
+
+/* Entering from the RIGHT (forward / auto-slide) */
+@keyframes enterFromRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0%);   }
+}
+
+/* Exiting to the LEFT (forward / auto-slide) */
+@keyframes exitToLeft {
+  from { transform: translateX(0%);    }
+  to   { transform: translateX(-100%); }
+}
+
+/* Entering from the LEFT (backward navigation) */
+@keyframes enterFromLeft {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0%);    }
+}
+
+/* Exiting to the RIGHT (backward navigation) */
+@keyframes exitToRight {
+  from { transform: translateX(0%);   }
+  to   { transform: translateX(100%); }
+}
+
+/* ── Root container ──────────────────────────────────────── */
+.sliderRoot {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 5;
+  overflow: hidden;
+  background-color: var(--hl-wood-dark, #2c1810);
+  user-select: none;
+  /* Pull the slider flush against the fixed navbar */
+  margin-top: calc(-1 * 70px); /* matches .main-content padding-top in globals.css */
+}
+
+/* ── Slide track ─────────────────────────────────────────── */
+.track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Individual slide base ───────────────────────────────── */
+.slide {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Idle / first render — just show it, no animation */
+.slideVisible {
+  transform: translateX(0%);
+  z-index: 1;
+  pointer-events: auto;
+}
+
+/* Completely off-screen (non-active, non-transitioning) */
+.slideHidden {
+  transform: translateX(100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Entering from right (forward) */
+.slideEnterRight {
+  animation: enterFromRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+/* Exiting to left (forward) */
+.slideExitLeft {
+  animation: exitToLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Entering from left (backward) */
+.slideEnterLeft {
+  animation: enterFromLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+/* Exiting to right (backward) */
+.slideExitRight {
+  animation: exitToRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Clickable link inside slide ─────────────────────────── */
+.slideLink {
+  display: block;
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+.slideLink:focus-visible {
+  box-shadow: inset 0 0 0 4px var(--hl-gold, #d4af37);
+}
+
+/* ── Next.js <Image> fill ────────────────────────────────── */
+.slideImage {
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
+}
+
+/* ── Arrow navigation buttons ────────────────────────────── */
+.arrow {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(44, 24, 16, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(212, 175, 55, 0.35);
+  color: var(--hl-cream, #f8f4ef);
+  cursor: pointer;
+  transition:
+    background    0.25s ease,
+    border-color  0.25s ease,
+    opacity       0.25s ease;
+  opacity: 0.82;
+}
+
+.arrow svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.arrowLeft  { left:  clamp(12px, 2.5vw, 28px); }
+.arrowRight { right: clamp(12px, 2.5vw, 28px); }
+
+.arrowLeft:hover,
+.arrowRight:hover {
+  background: rgba(212, 175, 55, 0.22);
+  border-color: var(--hl-gold, #d4af37);
+  opacity: 1;
+  transform: translateY(-50%) scale(1.08);
+  translate: unset;
+}
+
+.arrowLeft:active,
+.arrowRight:active {
+  transform: translateY(-50%) scale(0.95);
+  translate: unset;
+}
+
+/* ── Dot indicators ──────────────────────────────────────── */
+.dots {
+  position: absolute;
+  bottom: clamp(10px, 2.5vw, 20px);
+  left: 50%;
+  translate: -50% 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(248, 244, 239, 0.45);
+  border: 1.5px solid rgba(248, 244, 239, 0.6);
+  cursor: pointer;
+  padding: 0;
+  transition:
+    width        0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    background   0.35s ease,
+    border-color 0.35s ease;
+}
+
+.dot:hover {
+  background: rgba(212, 175, 55, 0.6);
+  border-color: var(--hl-gold, #d4af37);
+}
+
+.dotActive {
+  width: 26px;
+  border-radius: 4px;
+  background: var(--hl-gold, #d4af37);
+  border-color: var(--hl-gold, #d4af37);
+}
+
+/* ── Responsive breakpoints ──────────────────────────────── */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .sliderRoot { aspect-ratio: 16 / 6; }
+  .arrow      { width: 42px; height: 42px; }
+  .arrow svg  { width: 20px; height: 20px; }
+}
+
+/* Large mobile — stay landscape */
+@media (max-width: 768px) {
+  .sliderRoot { aspect-ratio: 16 / 7; }
+  .arrow      { width: 36px; height: 36px; opacity: 0.72; }
+  .arrow svg  { width: 18px; height: 18px; }
+  .dots       { gap: 6px; }
+  .dot        { width: 7px; height: 7px; }
+  .dotActive  { width: 22px; }
+}
+
+/* Mobile portrait — stay landscape */
+@media (max-width: 480px) {
+  .sliderRoot  { aspect-ratio: 16 / 9; }
+  .arrowLeft   { left: 8px; }
+  .arrowRight  { right: 8px; }
+  .arrow       { width: 32px; height: 32px; }
+  .arrow svg   { width: 16px; height: 16px; }
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .slideEnterRight,
+  .slideEnterLeft,
+  .slideExitLeft,
+  .slideExitRight {
+    animation-duration: 0.01ms !important;
+  }
+}

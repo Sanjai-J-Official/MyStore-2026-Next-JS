@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import styles from './Navbar.module.css';
@@ -153,15 +154,28 @@ const Navbar = () => {
                 className={styles.brand}
                 aria-label="Hidden Leaf — Home"
               >
-                <span className={styles.brandCrystalMask}>
-                  <span className={styles.brandText}>Hidden Leaf</span>
-                  <span className={styles.brandSweep} aria-hidden="true" />
-                </span>
-                <span className={styles.brandLineGroup} aria-hidden="true">
-                  <span className={styles.brandLine} />
-                  <span className={styles.brandDot} />
-                  <span className={styles.brandLine} />
-                </span>
+                {/* Logo image — /public/logo.png */}
+                <Image
+                  src="/logo.png"
+                  alt="Hidden Leaf logo"
+                  width={42}
+                  height={42}
+                  className={styles.brandLogoIcon}
+                  priority
+                />
+
+                {/* Brand name + decorative lines stacked vertically */}
+                <div className={styles.brandTextColumn}>
+                  <span className={styles.brandCrystalMask}>
+                    <span className={styles.brandText}>Hidden Leaf</span>
+                    <span className={styles.brandSweep} aria-hidden="true" />
+                  </span>
+                  <span className={styles.brandLineGroup} aria-hidden="true">
+                    <span className={styles.brandLine} />
+                    <span className={styles.brandDot} />
+                    <span className={styles.brandLine} />
+                  </span>
+                </div>
               </Link>
             </div>
 
@@ -225,15 +239,20 @@ const Navbar = () => {
               {mobileOpen ? <CloseIcon /> : <HamburgerIcon />}
             </button>
 
+            {/* Mobile: only logo icon, perfectly centered via absolute positioning */}
             <Link
               href="/"
               className={styles.brandMobile}
               aria-label="Hidden Leaf — Home"
             >
-              <span className={styles.brandCrystalMask}>
-                <span className={styles.brandTextMobile}>Hidden Leaf</span>
-                <span className={styles.brandSweep} aria-hidden="true" />
-              </span>
+              <Image
+                src="/logo.png"
+                alt="Hidden Leaf logo"
+                width={38}
+                height={38}
+                className={styles.brandLogoIconMobile}
+                priority
+              />
             </Link>
 
             <Link
