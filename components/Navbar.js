@@ -1,77 +1,308 @@
 'use client';
 
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import styles from './Navbar.module.css';
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [bounce, setBounce] = useState(false);
+const SearchIcon = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="11" cy="11" r="7" />
+    <line x1="20" y1="20" x2="16.5" y2="16.5" />
+  </svg>
+);
+
+const CartIcon = () => (
+  <svg
+    width="22"
+    height="22"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    {/* minimal luxury bag icon */}
+    <path d="M6 8h12l-1 10H7L6 8z" />
+    <path d="M9 8a3 3 0 0 1 6 0" />
+  </svg>
+);
+
+const HamburgerIcon = () => (
+  <svg
+    width="22"
+    height="22"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <line x1="3" y1="6" x2="21" y2="6" />
+    <line x1="3" y1="12" x2="21" y2="12" />
+    <line x1="3" y1="18" x2="21" y2="18" />
+  </svg>
+);
+
+const CloseIcon = () => (
+  <svg
+    width="22"
+    height="22"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <line x1="6" y1="6" x2="18" y2="18" />
+    <line x1="6" y1="18" x2="18" y2="6" />
+  </svg>
+);
+
+const leftLinks = [
+  { name: 'Home', path: '/' },
+  { name: 'Products', path: '/products' },
+];
+
+const rightLinks = [
+  { name: 'About', path: '/about' },
+  { name: 'Contact', path: '/contact' },
+];
+
+const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
   const pathname = usePathname();
   const { totalItems } = useCart();
+  const searchRef = useRef(null);
 
   useEffect(() => {
-    if (totalItems > 0) {
-      setBounce(true);
-      const timer = setTimeout(() => setBounce(false), 300);
-      return () => clearTimeout(timer);
-    }
-  }, [totalItems]);
+    const onScroll = () => setIsScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-  const closeMenu = () => setIsOpen(false);
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  const navbarClassName = [
+    styles.navbar,
+    isScrolled ? styles.navbarScrolled : '',
+    mobileOpen ? styles.navbarMobileOpen : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  const renderNavLink = (link) => (
+    <li key={link.name} className={styles.navItem}>
+      <Link
+        href={link.path}
+        className={`${styles.navLink} ${
+          pathname === link.path ? styles.navLinkActive : ''
+        }`}
+        onClick={() => setMobileOpen(false)}
+      >
+        <span className={styles.navLinkInner}>{link.name}</span>
+      </Link>
+    </li>
+  );
 
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.navContainer}>
-        <Link href="/" className={styles.logo} onClick={closeMenu}>
-          My<span>Store</span>
-        </Link>
-        
-        <div className={`${styles.navLinks} ${isOpen ? styles.open : ''}`}>
-          <Link 
-            href="/" 
-            className={`${styles.link} ${pathname === '/' ? styles.activeLink : ''}`}
-            onClick={closeMenu}
-          >
-            Home
-          </Link>
-          <Link 
-            href="/products" 
-            className={`${styles.link} ${pathname === '/products' ? styles.activeLink : ''}`}
-            onClick={closeMenu}
-          >
-            Products
-          </Link>
-        </div>
+    <>
+      <nav className={navbarClassName} aria-label="Main navigation">
+        <div className={styles.glassOverlay} aria-hidden="true" />
 
-        <div className={styles.cartWrapper}>
-          <Link href="/cart" className={styles.cartButton}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="9" cy="21" r="1"></circle>
-              <circle cx="20" cy="21" r="1"></circle>
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-            </svg>
-            {totalItems > 0 && (
-              <span className={`${styles.cartCount} ${bounce ? styles.bounce : ''}`}>
-                {totalItems}
+        <div className={styles.navContainer}>
+          {/* DESKTOP LAYOUT: left / center / right columns */}
+          <div className={styles.desktopRow}>
+            <div className={styles.desktopSideLeft}>
+              <ul className={styles.navList}>
+                {leftLinks.map(renderNavLink)}
+              </ul>
+            </div>
+
+            <div className={styles.desktopCenter}>
+              <Link
+                href="/"
+                className={styles.brand}
+                aria-label="Hidden Leaf — Home"
+              >
+                <span className={styles.brandCrystalMask}>
+                  <span className={styles.brandText}>Hidden Leaf</span>
+                  <span className={styles.brandSweep} aria-hidden="true" />
+                </span>
+                <span className={styles.brandLineGroup} aria-hidden="true">
+                  <span className={styles.brandLine} />
+                  <span className={styles.brandDot} />
+                  <span className={styles.brandLine} />
+                </span>
+              </Link>
+            </div>
+
+            <div className={styles.desktopSideRight}>
+              <ul className={styles.navList}>
+                {rightLinks.map(renderNavLink)}
+              </ul>
+
+              <div className={styles.actionGroup}>
+                <div
+                  className={`${styles.search} ${
+                    searchFocused ? styles.searchFocused : ''
+                  }`}
+                >
+                  <button
+                    type="button"
+                    className={styles.searchButton}
+                    aria-label="Search"
+                    onClick={() => searchRef.current?.focus()}
+                  >
+                    <SearchIcon />
+                  </button>
+                  <input
+                    ref={searchRef}
+                    type="search"
+                    className={styles.searchInput}
+                    placeholder="Search"
+                    aria-label="Search products"
+                    onFocus={() => setSearchFocused(true)}
+                    onBlur={() => setSearchFocused(false)}
+                  />
+                </div>
+
+                <Link
+                  href="/cart"
+                  className={styles.cartButton}
+                  aria-label={`Cart, ${totalItems} item${
+                    totalItems === 1 ? '' : 's'
+                  }`}
+                >
+                  <CartIcon />
+                  {totalItems > 0 && (
+                    <span className={styles.cartBadge} aria-hidden="true">
+                      {totalItems > 99 ? '99+' : totalItems}
+                    </span>
+                  )}
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* MOBILE LAYOUT: hamburger / centered brand / cart */}
+          <div className={styles.mobileRow}>
+            <button
+              type="button"
+              className={styles.mobileToggle}
+              onClick={() => setMobileOpen((open) => !open)}
+              aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={mobileOpen}
+            >
+              {mobileOpen ? <CloseIcon /> : <HamburgerIcon />}
+            </button>
+
+            <Link
+              href="/"
+              className={styles.brandMobile}
+              aria-label="Hidden Leaf — Home"
+            >
+              <span className={styles.brandCrystalMask}>
+                <span className={styles.brandTextMobile}>Hidden Leaf</span>
+                <span className={styles.brandSweep} aria-hidden="true" />
               </span>
-            )}
-          </Link>
+            </Link>
 
-          <button 
-            className={`${styles.hamburger} ${isOpen ? styles.open : ''}`} 
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
+            <Link
+              href="/cart"
+              className={styles.cartButton}
+              aria-label={`Cart, ${totalItems} item${
+                totalItems === 1 ? '' : 's'
+              }`}
+            >
+              <CartIcon />
+              {totalItems > 0 && (
+                <span className={styles.cartBadge} aria-hidden="true">
+                  {totalItems > 99 ? '99+' : totalItems}
+                </span>
+              )}
+            </Link>
+          </div>
         </div>
-      </div>
-    </nav>
+
+        {/* MOBILE DRAWER */}
+        <div
+          className={`${styles.mobileDrawer} ${
+            mobileOpen ? styles.mobileDrawerOpen : ''
+          }`}
+          aria-hidden={!mobileOpen}
+        >
+          <ul className={styles.mobileNavList}>
+            {[...leftLinks, ...rightLinks].map((link) => (
+              <li key={link.name} className={styles.mobileNavItem}>
+                <Link
+                  href={link.path}
+                  className={`${styles.mobileNavLink} ${
+                    pathname === link.path ? styles.mobileNavLinkActive : ''
+                  }`}
+                  tabIndex={mobileOpen ? 0 : -1}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <div className={styles.mobileSearch}>
+            <SearchIcon />
+            <input
+              type="search"
+              className={styles.mobileSearchInput}
+              placeholder="Search products"
+              aria-label="Search products"
+              tabIndex={mobileOpen ? 0 : -1}
+            />
+          </div>
+
+          <span className={styles.mobileSignature} aria-hidden="true">
+            Hidden Leaf · Handcrafted Wood
+          </span>
+        </div>
+      </nav>
+
+      {mobileOpen && (
+        <div
+          className={styles.backdrop}
+          onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+    </>
   );
-}
+};
+
+export default Navbar;

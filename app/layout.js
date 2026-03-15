@@ -8,10 +8,7 @@ import Footer from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata = {
-  title: 'MyStore | Fresh Styles, Real Prices',
-  description: 'Production-ready Next.js 14 ecommerce store',
-};
+ 
 
 export default function RootLayout({ children }) {
   return (
@@ -31,3 +28,10 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+export const metadata = {
+  title: 'Hiddenleaf | Premium Fashion Store',
+  description: 'Production-ready Next.js ecommerce store',
+  icons: {
+    icon: '/favicon.ico',  // use your existing .ico
+  },
+};
