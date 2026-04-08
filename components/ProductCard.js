@@ -15,7 +15,7 @@ export default function ProductCard({ product }) {
 
   return (
     <div className={styles.card}>
-      <Link href={`/products/${product._id || product.id}`} className={styles.imageContainer}>
+      <Link href={`/products/${product.slug || product._id}`} className={styles.imageContainer}>
         <div className={styles.badges}>
           {discount > 0 && <span className={styles.discountBadge}>{discount}% OFF</span>}
           {isNew && <span className={styles.newBadge}>NEW</span>}
@@ -30,7 +30,7 @@ export default function ProductCard({ product }) {
       
       <div className={styles.content}>
         <span className={styles.category}>{product.category}</span>
-        <Link href={`/products/${product._id || product.id}`}>
+        <Link href={`/products/${product.slug || product._id}`}>
           <h3 className={styles.name} title={product.name}>{product.name}</h3>
         </Link>
         

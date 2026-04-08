@@ -38,7 +38,14 @@ export async function POST(request) {
   try {
     await dbConnect();
     const body = await request.json();
-    const product = await Product.create(body);
+
+    // Never let the caller manually set a slug — always auto-generate it
+    delete body.slug;
+
+    // Use new + save (not Product.create) so the pre-save hook fires
+    const product = new Product(body);
+    await product.save();
+
     return NextResponse.json({ success: true, data: product }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
@@ -47,3 +54,4 @@ export async function POST(request) {
     );
   }
 }
+

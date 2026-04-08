@@ -5,24 +5,26 @@ import Product from '@/models/Product';
 export async function GET(request, { params }) {
   try {
     await dbConnect();
-    const product = await Product.findById(params.id);
-    
+
+    // Try slug first, then fall back to _id (backward compat)
+    let product = await Product.findOne({ slug: params.id });
+    if (!product) {
+      product = await Product.findById(params.id).catch(() => null);
+    }
+
     if (!product) {
       return NextResponse.json({ success: false, error: 'Product not found' }, { status: 404 });
     }
-    
-    // Fetch related products (same category, excluding current)
+
+    // Related products: same category, excluding current
     const relatedProducts = await Product.find({
       category: product.category,
-      _id: { $ne: product._id }
+      _id: { $ne: product._id },
     }).limit(4);
-    
-    return NextResponse.json({ 
-      success: true, 
-      data: {
-        product,
-        relatedProducts
-      }
+
+    return NextResponse.json({
+      success: true,
+      data: { product, relatedProducts },
     });
   } catch (error) {
     return NextResponse.json(
@@ -32,24 +34,34 @@ export async function GET(request, { params }) {
   }
 }
 
+
 export async function PUT(request, { params }) {
   try {
     await dbConnect();
     const body = await request.json();
-    const product = await Product.findByIdAndUpdate(params.id, body, { new: true, runValidators: true });
-    
+
+    // Never let caller override the slug — it's always derived from name
+    delete body.slug;
+
+    const product = await Product.findById(params.id);
     if (!product) {
       return NextResponse.json({ success: false, error: 'Product not found' }, { status: 404 });
     }
-    
+
+    // Assign each field individually so Mongoose tracks changes
+    // and the pre-save hook can regenerate the slug if name changed
+    Object.assign(product, body);
+    await product.save();
+
     return NextResponse.json({ success: true, data: product });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: 'Failed to update product' },
+      { success: false, error: error.message || 'Failed to update product' },
       { status: 400 }
     );
   }
 }
+
 
 export async function DELETE(request, { params }) {
   try {
