@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://fromthehiddenleafstore.com', // change this
+  siteUrl: 'https://www.fromthehiddenleafstore.com',
   generateRobotsTxt: true,
 
   exclude: [
@@ -9,4 +9,19 @@ module.exports = {
     '/cart',
     '/checkout'
   ],
+
+  additionalPaths: async () => {
+    try {
+      const res = await fetch('https://www.fromthehiddenleafstore.com/api/products');
+      const products = await res.json();
+
+      return products.map(product => ({
+        loc: `/products/${product.slug}`,
+        lastmod: new Date().toISOString(),
+      }));
+    } catch (err) {
+      console.error('Error fetching products for sitemap:', err);
+      return [];
+    }
+  },
 };
