@@ -1,0 +1,344 @@
+/* ─── Artisan Region Page Styles ─────────────────────────────────────── */
+
+.page {
+  min-height: 100vh;
+  background: var(--bg-secondary);
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--hl-wood-dark) 0%, var(--primary-dark) 60%, var(--primary) 100%);
+  padding: 72px 24px 56px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(212,175,55,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.heroInner {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 24px;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: var(--hl-gold-light);
+}
+
+.badge {
+  display: inline-block;
+  background: rgba(212,175,55,0.18);
+  border: 1px solid rgba(212,175,55,0.4);
+  color: var(--hl-gold-light);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 50px;
+  margin-bottom: 20px;
+}
+
+.heroTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 600;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+
+.heroSub {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
+/* CONTENT */
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 24px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+}
+
+/* ARTISAN CARD */
+
+.artisanCard {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 48px;
+  align-items: start;
+  background: var(--bg-primary);
+  border-radius: 20px;
+  padding: 36px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.artisanImageWrap {
+  position: relative;
+}
+
+.artisanImage {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.artisanBadge {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(28,18,10,0.8);
+  color: var(--hl-gold-light);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 5px 10px;
+  border-radius: 50px;
+}
+
+.label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--hl-gold-dark);
+  margin-bottom: 10px;
+}
+
+.artisanName {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 18px;
+  line-height: 1.1;
+}
+
+.artisanStory {
+  color: var(--text-secondary);
+  font-size: 0.97rem;
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+
+.metaGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.metaLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.metaValue {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* PRODUCT SECTION */
+
+.productTitle {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 28px;
+  line-height: 1.2;
+}
+
+.productCard {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 36px;
+  background: var(--bg-warm);
+  border-radius: 18px;
+  padding: 28px;
+  border: 1px solid var(--border);
+}
+
+.productImageWrap {
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+
+.productImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.productImageWrap:hover .productImage {
+  transform: scale(1.05);
+}
+
+.productPrice {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+
+.productDesc {
+  color: var(--text-secondary);
+  font-size: 0.93rem;
+  line-height: 1.75;
+  margin-bottom: 28px;
+}
+
+.productActions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btnPrimary {
+  background: var(--primary);
+  color: white;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.2s, transform 0.2s;
+  display: inline-block;
+}
+
+.btnPrimary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.btnOutline {
+  background: transparent;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  padding: 11px 28px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+.btnOutline:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* EXPLORE MORE */
+
+.exploreTitle {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--text-primary);
+  margin-bottom: 28px;
+}
+
+.regionGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.regionCard {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 16px;
+  text-align: center;
+  transition: all 0.25s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.regionCard:hover {
+  border-color: var(--hl-gold);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.regionImg {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+}
+
+.regionLabel {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.regionCraft {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .artisanCard {
+    grid-template-columns: 1fr;
+  }
+  .productCard {
+    grid-template-columns: 1fr;
+  }
+  .regionGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .regionGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .productActions {
+    flex-direction: column;
+  }
+  .btnPrimary, .btnOutline {
+    text-align: center;
+  }
+}

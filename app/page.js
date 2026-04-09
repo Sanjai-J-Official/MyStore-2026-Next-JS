@@ -4,7 +4,9 @@ import dbConnect from '@/lib/mongodb';
 import Product from '@/models/Product';
 import ProductCard from '@/components/ProductCard';
 import HeroSlider from '@/components/HeroSlider';
+import ArtisanMap from '@/components/ArtisanMap';
 import styles from './page.module.css';
+
 
 async function getFeaturedProducts() {
   try {
@@ -74,7 +76,10 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* 3. CATEGORIES */}
+      {/* 3. ARTISAN DISCOVERY MAP */}
+      <ArtisanMap />
+
+      {/* 4. CATEGORIES */}
       <div className={styles.categorySection}>
         <div className={styles.categoryInner}>
           <span className={styles.sectionLabel}>Explore</span>
@@ -97,7 +102,7 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* 4. BEST SELLING PRODUCTS */}
+      {/* 5. BEST SELLING PRODUCTS */}
       <section className={styles.section}>
         <span className={styles.sectionLabel}>Bestsellers</span>
         <h2 className={styles.sectionTitle}>Our Finest Creations</h2>
@@ -123,7 +128,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 5. ARTISAN STORY SECTION */}
+      {/* 6. ARTISAN STORY SECTION */}
       <div className={styles.artisanSection}>
         <div className={styles.artisanInner}>
           <div className={styles.artisanText}>

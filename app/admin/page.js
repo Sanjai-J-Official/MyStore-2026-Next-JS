@@ -44,6 +44,13 @@ export default async function AdminDashboard() {
           >
             + Add Product
           </Link>
+          <Link
+            href="/admin/artisans"
+            className={styles.btnPrimary}
+            style={{ background: 'var(--primary)' }}
+          >
+            🗺 Manage Artisans
+          </Link>
         </div>
       </div>
 
