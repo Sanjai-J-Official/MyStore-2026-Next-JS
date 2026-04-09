@@ -1,36 +1,52 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap');
 
 :root {
-  --primary: #764ba2;
-  --primary-dark: #5e3a82;
-  --primary-light: #9b6bc5;
-  --secondary: #667eea;
-  --success: #2e7d32;
+  /* Brand – Hidden Leaf earthy/wood palette */
+  --primary: #8B5E3C;
+  --primary-dark: #6B4226;
+  --primary-light: #B8855A;
+  --secondary: #D4AF37;          /* gold accent */
+  --secondary-light: #E8D5A3;
+  --success: #4A7C59;
   --error: #c62828;
-  --warning: #f57f17;
-  --text-primary: #1a1a1a;
-  --text-secondary: #555555;
-  --text-muted: #888888;
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --bg-dark: #1a1a2e;
-  --border: #e0e0e0;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
-  --font-family: 'Inter', Arial, sans-serif;
-    /* Hidden Leaf navbar tokens */
-    --hl-gold: #D4AF37;
-    --hl-gold-light: #E8D29B;
-    --hl-gold-dark: #B38A2A;
-    --hl-wood-dark: #2C1810;
-    --hl-wood-mid: #5C3D2E;
-    --hl-white: #FFFFFF;
-    --hl-cream: #F8F4EF;
-  
-    --nav-height: 88px;
-    --nav-height-sm: 68px;
+  --warning: #D4AF37;
 
+  /* Text */
+  --text-primary: #1C120A;
+  --text-secondary: #4A3728;
+  --text-muted: #9A8070;
+
+  /* Backgrounds */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #FAF7F3;       /* warm cream */
+  --bg-warm: #F3EDE3;            /* warm light beige */
+  --bg-dark: #1C120A;            /* deep wood dark */
+  --bg-section: #F8F4EF;
+
+  /* Borders */
+  --border: #E2D8CE;
+  --border-warm: #C9B89E;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(44, 24, 16, 0.08);
+  --shadow-md: 0 4px 20px rgba(44, 24, 16, 0.12);
+  --shadow-lg: 0 8px 40px rgba(44, 24, 16, 0.18);
+
+  /* Typography */
+  --font-family: 'Inter', Arial, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+
+  /* Hidden Leaf brand tokens */
+  --hl-gold: #D4AF37;
+  --hl-gold-light: #E8D29B;
+  --hl-gold-dark: #B38A2A;
+  --hl-wood-dark: #2C1810;
+  --hl-wood-mid: #5C3D2E;
+  --hl-white: #FFFFFF;
+  --hl-cream: #F8F4EF;
+
+  --nav-height: 88px;
+  --nav-height-sm: 68px;
 }
 /* global themes within a shared scope */
 

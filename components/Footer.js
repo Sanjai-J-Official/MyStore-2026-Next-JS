@@ -7,10 +7,10 @@ export default function Footer() {
       <div className={styles.container}>
         <div>
           <Link href="/" className={styles.logo}>
-            My<span>Store</span>
+            Hidden <span>Leaf</span>
           </Link>
           <p className={styles.tagline}>
-            Fresh styles and real prices, delivered directly to your door.
+            Rare, handmade, and premium wooden products from hidden artisans across India.
           </p>
         </div>
 
@@ -19,8 +19,8 @@ export default function Footer() {
           <ul className={styles.links}>
             <li className={styles.linkItem}><Link href="/">Home</Link></li>
             <li className={styles.linkItem}><Link href="/products">Shop All</Link></li>
+            <li className={styles.linkItem}><Link href="/products?category=Corporate+Gifting">Corporate Gifting</Link></li>
             <li className={styles.linkItem}><Link href="/cart">Cart</Link></li>
-            <li className={styles.linkItem}><Link href="/admin">Admin Login</Link></li>
           </ul>
         </div>
 
@@ -37,15 +37,14 @@ export default function Footer() {
         <div>
           <h4 className={styles.heading}>Contact Info</h4>
           <div className={styles.contactInfo}>
-            <p>123 Commerce St, New City, IN 400001</p>
-            <p>Email: support@mystore.com</p>
-            <p>Phone: +91 98765 43210</p>
+            <p>India</p>
+            <p>Email: info@fromthehiddenleafstore.com</p>
           </div>
         </div>
       </div>
 
       <div className={styles.bottomBar}>
-        <p>&copy; {new Date().getFullYear()} MyStore. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Hidden Leaf Store. All rights reserved.</p>
       </div>
     </footer>
   );

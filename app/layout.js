@@ -8,7 +8,45 @@ import Footer from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
- 
+export const metadata = {
+  metadataBase: new URL('https://fromthehiddenleafstore.com'),
+  title: {
+    default: 'Hidden Leaf | Premium Handcrafted & Wooden Products',
+    template: '%s | Hidden Leaf',
+  },
+  description:
+    'Discover rare, handmade, and premium wooden products sourced from hidden artisans across India. Corporate gifting, artisan collections & limited editions.',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'Hidden Leaf | Premium Handcrafted & Wooden Products',
+    description:
+      'Discover rare, handmade, and premium wooden products sourced from hidden artisans across India.',
+    url: 'https://fromthehiddenleafstore.com',
+    siteName: 'Hidden Leaf Store',
+    images: [
+      {
+        url: '/logo.png',
+        width: 800,
+        height: 600,
+        alt: 'Hidden Leaf Store',
+      },
+    ],
+    locale: 'en_IN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Hidden Leaf | Premium Handcrafted & Wooden Products',
+    description:
+      'Discover rare, handmade, and premium wooden products sourced from hidden artisans across India.',
+    images: ['/logo.png'],
+  },
+  icons: {
+    icon: '/favicon.ico',
+  },
+};
 
 export default function RootLayout({ children }) {
   return (
@@ -28,10 +66,3 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-export const metadata = {
-  title: 'Hiddenleaf | Premium Fashion Store',
-  description: 'Production-ready Next.js ecommerce store',
-  icons: {
-    icon: '/favicon.ico',  // use your existing .ico
-  },
-};
