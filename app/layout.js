@@ -5,6 +5,7 @@ import { ToastProvider } from '@/context/ToastContext';
 import ToastContainer from '@/components/Toast';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import FloatingCart from '@/components/FloatingCart';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -59,6 +60,7 @@ export default function RootLayout({ children }) {
               <main className="main-content">{children}</main>
               <Footer />
             </div>
+            <FloatingCart />
             <ToastContainer />
           </CartProvider>
         </ToastProvider>
