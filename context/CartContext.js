@@ -26,6 +26,13 @@ export function CartProvider({ children }) {
   }, [cartItems, isLoaded]);
 
   const addToCart = (product, quantity = 1) => {
+    const existingCheck = cartItems.find((item) => item.productId === (product._id || product.id));
+    const currentQ = existingCheck ? existingCheck.quantity : 0;
+    
+    if (currentQ + quantity > product.stock) {
+      return { success: false, message: `Only ${product.stock} left in stock.` };
+    }
+
     setCartItems((prev) => {
       const existing = prev.find((item) => item.productId === (product._id || product.id));
       if (existing) {
@@ -42,12 +49,14 @@ export function CartProvider({ children }) {
           name: product.name,
           price: product.price,
           image: product.image,
-          category: product.category,
+          category: product.categories ? product.categories.join(', ') : (product.category || ''),
           stock: product.stock,
           quantity,
         },
       ];
     });
+    
+    return { success: true };
   };
 
   const removeFromCart = (productId) => {

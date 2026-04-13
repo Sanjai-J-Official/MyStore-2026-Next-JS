@@ -54,14 +54,24 @@ export default function ProductDetailsPage({ params }) {
   };
 
   const handleAddToCart = () => {
-    addToCart(product, quantity);
+    const res = addToCart(product, quantity);
+    
+    if (res && res.success === false) {
+      showToast(res.message, 'error');
+      return;
+    }
+
     showToast(`${quantity} ${product.name} added to cart!`, 'success');
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 2000);
   };
 
   const handleBuyNow = () => {
-    addToCart(product, quantity);
+    const res = addToCart(product, quantity);
+    if (res && res.success === false) {
+      showToast(res.message, 'error');
+      return;
+    }
     router.push('/cart');
   };
 

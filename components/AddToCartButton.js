@@ -14,7 +14,13 @@ export default function AddToCartButton({ product, disabled = false, small = fal
     e.preventDefault();
     e.stopPropagation();
 
-    addToCart(product, 1);
+    const res = addToCart(product, 1);
+    
+    if (res && res.success === false) {
+      showToast(res.message, 'error');
+      return;
+    }
+
     showToast(`${product.name} added to cart!`, 'success');
     setIsAdded(true);
 
