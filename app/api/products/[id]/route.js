@@ -18,7 +18,7 @@ export async function GET(request, { params }) {
 
     // Related products: same category, excluding current
     const relatedProducts = await Product.find({
-      category: product.category,
+      categories: { $in: product.categories || [] },
       _id: { $ne: product._id },
     }).limit(4);
 

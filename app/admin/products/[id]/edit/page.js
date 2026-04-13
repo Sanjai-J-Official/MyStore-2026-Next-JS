@@ -1,13 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useToast } from '@/context/ToastContext';
 import styles from '../../../../checkout/checkout.module.css'; // Reusing form styles
 import adminStyles from '../../../admin.module.css';
 
-export default function EditProduct({ params }) {
+// --- Inner component wrapped by Suspense ---
+function EditProductContent({ params }) {
   const searchParams = useSearchParams();
   const key = searchParams.get('key');
   const router = useRouter();
@@ -19,18 +20,29 @@ export default function EditProduct({ params }) {
     description: '',
     price: '',
     originalPrice: '',
-    category: '',
+    categories: [],
     stock: '',
     image: ''
   });
 
+  const [availableCategories, setAvailableCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const CATEGORIES = ['Clothing', 'Footwear', 'Electronics', 'Accessories', 'Bags'];
-
   useEffect(() => {
-    fetchProduct();
+    // Fetch categories first
+    fetch('/api/categories')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) setAvailableCategories(data.data);
+        // Then fetch product
+        return fetchProduct();
+      })
+      .catch(err => {
+        console.error(err);
+        showToast('Error loading page data', 'error');
+        setIsLoading(false);
+      });
   }, [id]);
 
   const fetchProduct = async () => {
@@ -40,12 +52,18 @@ export default function EditProduct({ params }) {
       
       if (data.success && data.data.product) {
         const p = data.data.product;
+        // Migration safety: convert older 'category' string to 'categories' array if needed
+        let initialCategories = p.categories || [];
+        if (initialCategories.length === 0 && p.category) {
+          initialCategories = [p.category];
+        }
+
         setFormData({
           name: p.name || '',
           description: p.description || '',
           price: p.price || '',
           originalPrice: p.originalPrice || '',
-          category: p.category || '',
+          categories: initialCategories,
           stock: p.stock || '',
           image: p.image || ''
         });
@@ -65,8 +83,25 @@ export default function EditProduct({ params }) {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleCategoryToggle = (catName) => {
+    setFormData(prev => {
+      const current = [...prev.categories];
+      if (current.includes(catName)) {
+        return { ...prev, categories: current.filter(c => c !== catName) };
+      } else {
+        current.push(catName);
+        return { ...prev, categories: current };
+      }
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.categories.length === 0) {
+      showToast('Please select at least one category', 'error');
+      return;
+    }
+    
     setIsSubmitting(true);
 
     try {
@@ -134,16 +169,16 @@ export default function EditProduct({ params }) {
               <label className={styles.label}>Product Name *</label>
               <input 
                 type="text" name="name" value={formData.name} onChange={handleChange}
-                className={styles.input} required placeholder="Classic White T-Shirt"
+                className={styles.input} required placeholder="Premium Wooden Bowl"
               />
             </div>
 
             <div className={`${styles.formGroup} ${styles.fullWidth}`}>
-              <label className={styles.label}>Description *</label>
+              <label className={styles.label}>Description (HTML supported) *</label>
               <textarea 
                 name="description" value={formData.description} onChange={handleChange}
                 className={styles.input} required rows={4}
-                placeholder="Product description..."
+                placeholder="<p>Awesome product...</p><a href='/'>Link</a>"
               />
             </div>
 
@@ -163,15 +198,20 @@ export default function EditProduct({ params }) {
               />
             </div>
 
-            <div className={styles.formGroup}>
-              <label className={styles.label}>Category *</label>
-              <select 
-                name="category" value={formData.category} onChange={handleChange}
-                className={styles.input} required
-              >
-                <option value="">Select Category</option>
-                {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
-              </select>
+            <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+              <label className={styles.label}>Categories *</label>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                {availableCategories.length > 0 ? availableCategories.map((cat) => (
+                  <label key={cat._id} style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
+                    <input 
+                      type="checkbox" 
+                      checked={formData.categories.includes(cat.name)}
+                      onChange={() => handleCategoryToggle(cat.name)}
+                    />
+                    {cat.name}
+                  </label>
+                )) : <span style={{color: 'var(--text-muted)'}}>No categories configured.</span>}
+              </div>
             </div>
 
             <div className={styles.formGroup}>
@@ -229,5 +269,13 @@ export default function EditProduct({ params }) {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function EditProduct({ params }) {
+  return (
+    <Suspense fallback={<div style={{ padding: '80px 0', textAlign: 'center' }}>Loading...</div>}>
+      <EditProductContent params={params} />
+    </Suspense>
   );
 }

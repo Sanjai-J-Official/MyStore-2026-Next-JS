@@ -1,13 +1,11 @@
 'use client';
 
-import { useState, Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useToast } from '@/context/ToastContext';
 import styles from '../../../checkout/checkout.module.css';
 import adminStyles from '../../admin.module.css';
-
-const CATEGORIES = ['Clothing', 'Footwear', 'Electronics', 'Accessories', 'Bags'];
 
 // ─── Inner component (uses useSearchParams) ───
 function AddProductContent() {
@@ -21,20 +19,47 @@ function AddProductContent() {
     description: '',
     price: '',
     originalPrice: '',
-    category: '',
+    categories: [],
     stock: '',
     image: '',
   });
 
+  const [availableCategories, setAvailableCategories] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/categories')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) setAvailableCategories(data.data);
+      })
+      .catch(err => console.error(err));
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleCategoryToggle = (catName) => {
+    setFormData(prev => {
+      const current = [...prev.categories];
+      if (current.includes(catName)) {
+        return { ...prev, categories: current.filter(c => c !== catName) };
+      } else {
+        current.push(catName);
+        return { ...prev, categories: current };
+      }
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.categories.length === 0) {
+      showToast('Please select at least one category', 'error');
+      return;
+    }
+    
     setIsSubmitting(true);
 
     try {
@@ -100,16 +125,16 @@ function AddProductContent() {
               <input
                 type="text" name="name" value={formData.name}
                 onChange={handleChange} className={styles.input}
-                required placeholder="Classic White T-Shirt"
+                required placeholder="Premium Wooden Bowl"
               />
             </div>
 
             <div className={`${styles.formGroup} ${styles.fullWidth}`}>
-              <label className={styles.label}>Description *</label>
+              <label className={styles.label}>Description (HTML supported) *</label>
               <textarea
                 name="description" value={formData.description}
                 onChange={handleChange} className={styles.input}
-                required rows={4} placeholder="Product description..."
+                required rows={4} placeholder="<p>Awesome product...</p><a href='/'>Link</a>"
               />
             </div>
 
@@ -131,17 +156,20 @@ function AddProductContent() {
               />
             </div>
 
-            <div className={styles.formGroup}>
-              <label className={styles.label}>Category *</label>
-              <select
-                name="category" value={formData.category}
-                onChange={handleChange} className={styles.input} required
-              >
-                <option value="">Select Category</option>
-                {CATEGORIES.map((cat) => (
-                  <option key={cat} value={cat}>{cat}</option>
-                ))}
-              </select>
+            <div className={`${styles.formGroup} ${styles.fullWidth}`}>
+              <label className={styles.label}>Categories *</label>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                {availableCategories.length > 0 ? availableCategories.map((cat) => (
+                  <label key={cat._id} style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
+                    <input 
+                      type="checkbox" 
+                      checked={formData.categories.includes(cat.name)}
+                      onChange={() => handleCategoryToggle(cat.name)}
+                    />
+                    {cat.name}
+                  </label>
+                )) : <span style={{color: 'var(--text-muted)'}}>No categories configured.</span>}
+              </div>
             </div>
 
             <div className={styles.formGroup}>

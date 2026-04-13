@@ -44,6 +44,9 @@ export default async function AdminDashboard() {
           >
             + Add Product
           </Link>
+          <Link href="/admin/categories?key=mysecretadmin123" className={styles.btnPrimary} style={{ background: '#7e57c2' }}>
+            🏷 Manage Categories
+          </Link>
           <Link
             href="/admin/artisans"
             className={styles.btnPrimary}

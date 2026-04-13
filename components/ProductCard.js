@@ -29,7 +29,7 @@ export default function ProductCard({ product }) {
       </Link>
       
       <div className={styles.content}>
-        <span className={styles.category}>{product.category}</span>
+        <span className={styles.category}>{product.categories?.join(', ') || product.category}</span>
         <Link href={`/products/${product.slug || product._id}`}>
           <h3 className={styles.name} title={product.name}>{product.name}</h3>
         </Link>

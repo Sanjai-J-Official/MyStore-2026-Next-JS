@@ -13,7 +13,7 @@ export async function GET(request) {
     let query = {};
     
     if (category && category !== 'All') {
-      query.category = category;
+      query.categories = { $in: [category] };
     }
     
     if (search) {

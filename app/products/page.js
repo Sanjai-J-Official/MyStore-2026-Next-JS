@@ -7,14 +7,13 @@ import { SkeletonGrid } from '@/components/Skeleton';
 import SearchBar from '@/components/SearchBar';
 import styles from './products.module.css';
 
-const CATEGORIES = ['All', 'Clothing', 'Footwear', 'Electronics', 'Accessories', 'Bags'];
-
 function ProductsContent() {
   const searchParams = useSearchParams();
   const search = searchParams.get('search') || '';
   const initialCategory = searchParams.get('category') || 'All';
 
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState(['All']);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeCategory, setActiveCategory] = useState(initialCategory);
@@ -23,6 +22,18 @@ function ProductsContent() {
   useEffect(() => {
     setActiveCategory(searchParams.get('category') || 'All');
   }, [searchParams]);
+
+  useEffect(() => {
+    // Fetch categories
+    fetch('/api/categories')
+      .then(res => res.json())
+      .then(data => {
+         if (data.success) {
+           setCategories(['All', ...data.data.map(c => c.name)]);
+         }
+      })
+      .catch(err => console.error(err));
+  }, []);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -85,7 +96,7 @@ function ProductsContent() {
 
         <div className={styles.controls}>
           <div className={styles.filters}>
-            {CATEGORIES.map(cat => (
+            {categories.map(cat => (
               <button
                 key={cat}
                 className={`${styles.filterBtn} ${activeCategory === cat ? styles.active : ''}`}

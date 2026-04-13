@@ -27,34 +27,34 @@ export const metadata = {
 
 const categories = [
   {
-    name: 'Wooden Decor',
-    img: '/icons/cat-wooden-decor.png',
-    href: '/products?category=Wooden+Decor',
-  },
-  {
-    name: 'Handcrafted Gifts',
+    name: 'Handcraft Product',
     img: '/icons/cat-handcrafted-gifts.png',
-    href: '/products?category=Handcrafted+Gifts',
+    href: '/products?category=Handcraft+Product',
   },
   {
-    name: 'Premium Wooden',
+    name: 'Wooden Product',
     img: '/icons/cat-premium-wooden.png',
-    href: '/products?category=Premium+Wooden',
+    href: '/products?category=Wooden+Product',
   },
   {
-    name: 'Corporate Gifting',
-    img: '/icons/cat-corporate-gifting.png',
-    href: '/products?category=Corporate+Gifting',
+    name: 'Home Decor',
+    img: '/icons/cat-wooden-decor.png',
+    href: '/products?category=Home+Decor',
   },
   {
-    name: 'Artisan Collection',
+    name: 'Wooden Toys',
     img: '/icons/cat-artisan-collection.png',
-    href: '/products?category=Artisan+Collection',
+    href: '/products?category=Wooden+Toys',
   },
   {
-    name: 'Limited Edition',
+    name: 'Wooden Premium Product',
     img: '/icons/cat-limited-edition.png',
-    href: '/products?category=Limited+Edition',
+    href: '/products?category=Wooden+Premium+Product',
+  },
+  {
+    name: 'Wooden Kitchen Products',
+    img: '/icons/cat-corporate-gifting.png',
+    href: '/products?category=Wooden+Kitchen+Products',
   },
 ];
 

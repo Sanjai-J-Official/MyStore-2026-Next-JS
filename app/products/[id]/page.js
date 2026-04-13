@@ -121,7 +121,7 @@ export default function ProductDetailsPage({ params }) {
 
         {/* RIGHT SIDE */}
         <div>
-          <span className={styles.category}>{product.category}</span>
+          <span className={styles.category}>{product.categories?.join(', ') || product.category}</span>
           <h1 className={styles.title}>{product.name}</h1>
           
           <div className={styles.rating}>
@@ -167,7 +167,7 @@ export default function ProductDetailsPage({ params }) {
             )}
           </div>
 
-          <p className={styles.description}>{product.description}</p>
+          <div className={styles.description} dangerouslySetInnerHTML={{ __html: product.description }} />
 
           <div className={styles.actions}>
             <div className={styles.quantitySelector}>
