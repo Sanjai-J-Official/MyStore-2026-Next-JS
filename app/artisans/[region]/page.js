@@ -154,7 +154,7 @@ export default function ArtisanRegionPage({ params }) {
           We haven&#39;t mapped artisans from this region yet. Check back soon.
         </p>
         <Link href="/" style={{ color: 'var(--primary)', fontWeight: 600 }}>
-          ← Back to Artisan Map
+          ← Back to Selection
         </Link>
       </div>
     );
@@ -165,8 +165,8 @@ export default function ArtisanRegionPage({ params }) {
       {/* HERO */}
       <div className={styles.hero}>
         <div className={styles.heroInner}>
-          <Link href="/#artisan-map" className={styles.backLink}>
-            ← Artisan Map
+          <Link href="/" className={styles.backLink}>
+            ← Back to Home
           </Link>
           <div className={styles.badge}>{data.craft}</div>
           <h1 className={styles.heroTitle}>{data.label}</h1>

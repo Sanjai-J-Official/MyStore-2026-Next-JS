@@ -4,7 +4,7 @@ import dbConnect from '@/lib/mongodb';
 import Product from '@/models/Product';
 import ProductCard from '@/components/ProductCard';
 import HeroSlider from '@/components/HeroSlider';
-import ArtisanMap from '@/components/ArtisanMap';
+
 import styles from './page.module.css';
 
 
@@ -76,8 +76,7 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* 3. ARTISAN DISCOVERY MAP */}
-      <ArtisanMap />
+
 
       {/* 4. CATEGORIES */}
       <div className={styles.categorySection}>
