@@ -49,6 +49,11 @@ const ProductSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    visibility: {
+      type: String,
+      enum: ['draft', 'published'],
+      default: 'published',
+    },
   },
   { timestamps: true }
 );

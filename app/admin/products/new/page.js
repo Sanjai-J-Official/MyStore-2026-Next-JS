@@ -22,6 +22,7 @@ function AddProductContent() {
     categories: [],
     stock: '',
     image: '',
+    visibility: 'published',
   });
 
   const [availableCategories, setAvailableCategories] = useState([]);
@@ -80,7 +81,7 @@ function AddProductContent() {
 
       if (data.success) {
         showToast('Product added successfully!', 'success');
-        router.push(`/admin/products?key=${key}`);
+        router.push(`/admin/products`);
       } else {
         showToast(data.error || 'Failed to add product', 'error');
       }
@@ -91,23 +92,11 @@ function AddProductContent() {
     }
   };
 
-  if (key !== 'mysecretadmin123') {
-    return (
-      <div className={adminStyles.errorState}>
-        <div className={adminStyles.errorTitle}>Access Denied</div>
-        <p>You do not have permission to view this page.</p>
-        <Link href="/" style={{ color: 'var(--primary)', marginTop: '16px', fontWeight: '600' }}>
-          &larr; Return to Store
-        </Link>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.container}>
       <div style={{ marginBottom: '32px' }}>
         <Link
-          href={`/admin/products?key=${key}`}
+          href={`/admin/products`}
           style={{ color: 'var(--text-muted)', marginBottom: '8px', display: 'inline-block' }}
         >
           &larr; Back to Products
@@ -179,6 +168,20 @@ function AddProductContent() {
                 onChange={handleChange} className={styles.input}
                 required min="0" placeholder="10"
               />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.label}>Visibility</label>
+              <select
+                name="visibility"
+                value={formData.visibility}
+                onChange={handleChange}
+                className={styles.input}
+                style={{ padding: '14px', borderRadius: '8px' }}
+              >
+                <option value="published">Published</option>
+                <option value="draft">Draft</option>
+              </select>
             </div>
 
             <div className={`${styles.formGroup} ${styles.fullWidth}`}>

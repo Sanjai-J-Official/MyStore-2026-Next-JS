@@ -33,35 +33,6 @@ export default async function AdminDashboard() {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>Admin Dashboard</h1>
-        <div className={styles.actions}>
-          <Link href="/admin/products" className={styles.btnPrimary}>
-            Manage Products
-          </Link>
-          <Link
-            href="/admin/products/new"
-            className={styles.btnPrimary}
-            style={{ background: 'var(--text-primary)' }}
-          >
-            + Add Product
-          </Link>
-          <Link href="/admin/categories?key=mysecretadmin123" className={styles.btnPrimary} style={{ background: '#7e57c2' }}>
-            🏷 Manage Categories
-          </Link>
-          <Link
-            href="/admin/artisans"
-            className={styles.btnPrimary}
-            style={{ background: 'var(--primary)' }}
-          >
-            🗺 Manage Artisans
-          </Link>
-          <Link
-            href="/admin/blogs"
-            className={styles.btnPrimary}
-            style={{ background: '#00b0ff', color: '#000' }}
-          >
-            📝 Manage Blogs
-          </Link>
-        </div>
       </div>
 
       <div className={styles.statsGrid}>

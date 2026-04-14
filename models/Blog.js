@@ -48,6 +48,11 @@ const BlogSchema = new mongoose.Schema(
       required: [true, 'Please provide a meta description for SEO.'],
       maxlength: [160, 'Meta description should ideally be under 160 chars'],
     },
+    visibility: {
+      type: String,
+      enum: ['draft', 'published'],
+      default: 'published',
+    },
   },
   { timestamps: true }
 );

@@ -37,6 +37,7 @@ export default function BlogForm({ initialData = null }) {
     content: '',
     metaTitle: '',
     metaDescription: '',
+    visibility: 'published',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -50,6 +51,7 @@ export default function BlogForm({ initialData = null }) {
         content: initialData.content || '',
         metaTitle: initialData.metaTitle || '',
         metaDescription: initialData.metaDescription || '',
+        visibility: initialData.visibility || 'published',
       });
     }
   }, [initialData]);
@@ -121,6 +123,19 @@ export default function BlogForm({ initialData = null }) {
           style={styles.input}
           placeholder="https://..."
         />
+      </div>
+
+      <div style={styles.group}>
+        <label style={styles.label}>Visibility</label>
+        <select
+          name="visibility"
+          value={formData.visibility}
+          onChange={handleChange}
+          style={styles.input}
+        >
+          <option value="published">Published</option>
+          <option value="draft">Draft</option>
+        </select>
       </div>
 
       <div style={styles.group}>
