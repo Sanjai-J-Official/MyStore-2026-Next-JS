@@ -10,7 +10,7 @@ export const revalidate = 60; // ISR for blogs
 // Dynamically generate metadata for SEO
 export async function generateMetadata({ params }) {
   await dbConnect();
-  const blog = await Blog.findOne({ slug: params.slug }).lean();
+  const blog = await Blog.findOne({ slug: params.slug, visibility: 'published' }).lean();
 
   if (!blog) {
     return {
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }) {
 // Pre-render pages for known slugs
 export async function generateStaticParams() {
   await dbConnect();
-  const blogs = await Blog.find({}).select('slug').lean();
+  const blogs = await Blog.find({ visibility: 'published' }).select('slug').lean();
   return blogs.map((blog) => ({
     slug: blog.slug,
   }));
@@ -41,7 +41,7 @@ export async function generateStaticParams() {
 
 export default async function BlogDetailPage({ params }) {
   await dbConnect();
-  const blog = await Blog.findOne({ slug: params.slug }).lean();
+  const blog = await Blog.findOne({ slug: params.slug, visibility: 'published' }).lean();
 
   if (!blog) {
     notFound();

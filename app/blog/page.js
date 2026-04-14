@@ -14,7 +14,7 @@ export const metadata = {
 async function getBlogs() {
   try {
     await dbConnect();
-    const blogs = await Blog.find({}).sort({ createdAt: -1 }).lean();
+    const blogs = await Blog.find({ visibility: 'published' }).sort({ createdAt: -1 }).lean();
     return JSON.parse(JSON.stringify(blogs));
   } catch (error) {
     console.error('Error fetching blogs:', error);
