@@ -55,24 +55,12 @@ function ManageProductsContent() {
     }
   };
 
-  if (key !== 'mysecretadmin123') {
-    return (
-      <div className={styles.errorState}>
-        <div className={styles.errorTitle}>Access Denied</div>
-        <p>You do not have permission to view this page.</p>
-        <Link href="/" style={{ color: 'var(--primary)', marginTop: '16px', fontWeight: '600' }}>
-          &larr; Return to Store
-        </Link>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <div>
           <Link
-            href={`/admin?key=${key}`}
+            href={`/admin`}
             style={{ color: 'var(--text-muted)', marginBottom: '8px', display: 'inline-block' }}
           >
             &larr; Back to Dashboard
@@ -80,7 +68,7 @@ function ManageProductsContent() {
           <h1 className={styles.title}>Manage Products</h1>
         </div>
         <div className={styles.actions}>
-          <Link href={`/admin/products/new?key=${key}`} className={styles.btnPrimary}>
+          <Link href={`/admin/products/new`} className={styles.btnPrimary}>
             + Add New Product
           </Link>
         </div>
@@ -147,7 +135,7 @@ function ManageProductsContent() {
                     <td>
                       <div style={{ display: 'flex', gap: '8px' }}>
                         <Link
-                          href={`/admin/products/${product._id}/edit?key=${key}`}
+                          href={`/admin/products/${product._id}/edit`}
                           style={{
                             padding: '6px 12px',
                             background: 'var(--bg-secondary)',

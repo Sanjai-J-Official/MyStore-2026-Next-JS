@@ -33,10 +33,8 @@ function CategoryManagerContent() {
   };
 
   useEffect(() => {
-    if (key === 'mysecretadmin123') {
-      fetchCategories();
-    }
-  }, [key]);
+    fetchCategories();
+  }, []);
 
   const handleAddCategory = async (e) => {
     e.preventDefault();
@@ -62,7 +60,7 @@ function CategoryManagerContent() {
   };
 
   const handleDeleteCategory = async (id) => {
-    if (!confirm('Are you sure you want to delete this category?')) return;
+    if (!window.confirm('Are you sure you want to delete this category?')) return;
     
     try {
       const res = await fetch(`/api/categories?id=${id}`, {
@@ -80,23 +78,11 @@ function CategoryManagerContent() {
     }
   };
 
-  if (key !== 'mysecretadmin123') {
-    return (
-      <div className={adminStyles.errorState}>
-        <div className={adminStyles.errorTitle}>Access Denied</div>
-        <p>You do not have permission to view this page.</p>
-        <Link href="/" style={{ color: 'var(--primary)', marginTop: '16px', fontWeight: '600' }}>
-          &larr; Return to Store
-        </Link>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.container}>
       <div style={{ marginBottom: '32px' }}>
         <Link
-          href={`/admin?key=${key}`}
+          href={`/admin`}
           style={{ color: 'var(--text-muted)', marginBottom: '8px', display: 'inline-block' }}
         >
           &larr; Back to Dashboard
