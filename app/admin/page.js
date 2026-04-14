@@ -54,6 +54,13 @@ export default async function AdminDashboard() {
           >
             🗺 Manage Artisans
           </Link>
+          <Link
+            href="/admin/blogs"
+            className={styles.btnPrimary}
+            style={{ background: '#00b0ff', color: '#000' }}
+          >
+            📝 Manage Blogs
+          </Link>
         </div>
       </div>
 

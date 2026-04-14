@@ -80,6 +80,7 @@ const CloseIcon = () => (
 const leftLinks = [
   { name: 'Home', path: '/' },
   { name: 'Products', path: '/products' },
+  { name: 'Blog', path: '/blog' },
 ];
 
 const rightLinks = [
